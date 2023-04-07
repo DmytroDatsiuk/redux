@@ -5,8 +5,8 @@ export const addContact = (name, number) => {
     type: 'contacts/addContact',
     payload: {
       id: nanoid(),
-      name,
-      number,
+      name: name,
+      number: number,
       choosen: false,
     },
   };
@@ -26,10 +26,10 @@ export const toggleChoosen = contactId => {
   };
 };
 
-export const contactFilter = value => {
+export const toggleBlocked = contactId => {
   return {
-    type: 'contacts/contactFilter',
-    payload: value.toLowerCase(),
+    type: 'contacts/toggleBlocked',
+    payload: contactId,
   };
 };
 
@@ -37,5 +37,12 @@ export const setStatusFilter = value => {
   return {
     type: 'filters/setStatusFilter',
     payload: value,
+  };
+};
+
+export const contactFilter = value => {
+  return {
+    type: 'filter/filterContact',
+    payload: value.toLowerCase(),
   };
 };

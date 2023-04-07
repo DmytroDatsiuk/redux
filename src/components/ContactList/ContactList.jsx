@@ -3,6 +3,7 @@ import React from 'react';
 import { Item, List } from './ContactList.styled';
 import { useSelector } from 'react-redux';
 import { statusFilters } from 'redux/constants';
+import { getContacts, getContactsFilter } from 'redux/selectors';
 // import { getContactsFilter } from 'redux/selectors';
 
 const getVisibleContacts = (contacts, statusFilter) => {
@@ -13,17 +14,26 @@ const getVisibleContacts = (contacts, statusFilter) => {
     case statusFilters.choosen:
       return contacts.filter(contact => contact.choosen);
 
+    case statusFilters.blocked:
+      return contacts.filter(contact => contact.blocked);
+
     default:
       return contacts;
   }
 };
 
 export const ContactList = () => {
-  const contacts = useSelector(state => state.contacts);
+  const contacts = useSelector(getContacts);
+
+  const filtered = useSelector(getContactsFilter);
+
+  const filteredContacts = contacts.filter(contact =>
+    contact.name.toLowerCase().includes(filtered)
+  );
 
   const statusFilter = useSelector(state => state.filters.status);
 
-  const visibleContacts = getVisibleContacts(contacts, statusFilter);
+  const visibleContacts = getVisibleContacts(filteredContacts, statusFilter);
 
   return (
     <List>

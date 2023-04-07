@@ -1,7 +1,5 @@
 import styled, { css } from 'styled-components';
 
-
-
 export const Description = styled.span`
   font-size: small;
 `;
@@ -22,7 +20,8 @@ export const Button = styled.button`
 `;
 
 export const Input = styled.input.attrs({ type: 'checkbox' })`
-  background-color: blue;
+  appearance: none;
+  position: absolute;
 `;
 
 export const Label = styled.label`

@@ -13,17 +13,21 @@ export const ContactCounter = () => {
       if (contact.choosen) {
         acc.choosen += 1;
       }
+      if (contact.blocked) {
+        acc.blocked += 1;
+      }
       acc.all += 1;
 
       return acc;
     },
-    { all: 0, choosen: 0 }
+    { all: 0, choosen: 0, blocked: 0 }
   );
 
   return (
     <div>
       <p>All: {count.all}</p>
       <p>Choosen: {count.choosen}</p>
+      <p>Blocked: {count.blocked}</p>
     </div>
   );
 };

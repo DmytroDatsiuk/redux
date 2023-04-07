@@ -2,7 +2,12 @@ import { Button, Input, Label, LabelText } from './Contact.styled';
 // Імпортуємо хук
 import { useDispatch } from 'react-redux';
 // Імпортуємо генератор екшену
-import { deleteContact, toggleChoosen } from 'redux/actions';
+import { deleteContact, toggleBlocked, toggleChoosen } from 'redux/actions';
+
+import { FiStar } from 'react-icons/fi';
+import { AiFillStar } from 'react-icons/ai';
+import { BsPersonLock } from 'react-icons/bs';
+import { BsPersonFillLock } from 'react-icons/bs';
 
 export const Contact = ({ contact }) => {
   // Отримуємо посилання на функцію відправки екшенів
@@ -22,9 +27,26 @@ export const Contact = ({ contact }) => {
           checked={contact.choosen}
           // checked
         />
+        {contact.choosen ? (
+          <AiFillStar color="#bce8f8" />
+        ) : (
+          <FiStar color="#bce8f8" />
+        )}
         <LabelText>
-          {contact.name}: {contact.number}
+          Name: {contact.name}: <p>Number: {contact.number}</p>
         </LabelText>
+      </Label>
+      <Label>
+        <Input
+          type="checkbox"
+          onChange={() => dispatch(toggleBlocked(contact.id))}
+          checked={contact.blocked}
+        />
+        {contact.blocked ? (
+          <BsPersonFillLock color="red" />
+        ) : (
+          <BsPersonLock color="#bce8f8" />
+        )}
       </Label>
 
       <Button type="button" onClick={() => dispatch(deleteContact(contact.id))}>

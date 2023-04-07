@@ -28,6 +28,12 @@ export const StatusFilter = () => {
       >
         Choosen
       </Button>
+      <Button
+        selected={filter === statusFilters.blocked}
+        onClick={() => handleFilterChange(statusFilters.blocked)}
+      >
+        Blocked
+      </Button>
     </div>
   );
 };

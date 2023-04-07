@@ -23,9 +23,12 @@ export const ContactForm = () => {
   const handleSubmit = event => {
     event.preventDefault();
     const form = event.target;
+    const formName = event.nativeEvent.srcElement.elements.name.value;
+    const formNumber = event.nativeEvent.srcElement.elements.number.value;
+
     // Викликаємо генератор екшену та передаємо текст завдання для поля payload
     // Відправляємо результат – екшен створення завдання
-    dispatch(addContact(form.elements.value));
+    dispatch(addContact(formName, formNumber));
     form.reset();
   };
   return (

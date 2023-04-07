@@ -1,5 +1,7 @@
 import { combineReducers } from 'redux';
 import { statusFilters } from './constants';
+// import { useSelector } from 'react-redux';
+// import { getContacts } from './selectors';
 
 const contactsInitialState = [
   {
@@ -7,27 +9,32 @@ const contactsInitialState = [
     name: 'Rosie Simpson',
     number: '+380934591256',
     choosen: true,
+    blocked: false,
   },
   {
     id: 'id-2',
     name: 'Hermione Kline',
     number: '+380934597486',
     choosen: false,
+    blocked: false,
   },
   {
     id: 'id-3',
     name: 'Eden Clements',
     number: '+380934512377',
     choosen: false,
+    blocked: true,
   },
   {
     id: 'id-4',
     name: 'Annie Copeland',
     number: '+380937891222',
     choosen: false,
+    blocked: false,
   },
 ];
 
+// console.log(allContact);
 // Відповідає лише за оновлення властивості contacts
 // Тепер значенням параметра state буде масив завдань
 const contactsReducer = (state = contactsInitialState, action) => {
@@ -46,10 +53,18 @@ const contactsReducer = (state = contactsInitialState, action) => {
         return { ...contact, choosen: !contact.choosen };
       });
 
-    case 'contacts/contactFilter':
-      return contactsInitialState.filter(contact =>
-        contact.name.toLowerCase().includes(action.payload)
-      );
+    case 'contacts/toggleBlocked':
+      return state.map(contact => {
+        if (contact.id !== action.payload) {
+          return contact;
+        }
+        return { ...contact, blocked: !contact.blocked };
+      });
+
+    // case 'contacts/contactFilter':
+    //   return contacts.filter(contact =>
+    //     contact.name.toLowerCase().includes(action.payload)
+    //   );
 
     default:
       return state;
@@ -70,6 +85,28 @@ const filtersReducer = (state = filtersInitialState, action) => {
         status: action.payload,
       };
 
+    // case 'filters/filter':
+    //   return contactsInitialState.filter(contact =>
+    //     contact.name.toLowerCase().includes(action.payload)
+    //   );
+
+    default:
+      return state;
+  }
+};
+
+const filter = {
+  filterWord: '',
+};
+
+const filterContactReducer = (state = filter, action) => {
+  switch (action.type) {
+    // case 'filter/filterContact':
+    //   return state.map(word => {
+    //     return { ...word, filterWord: action.payload };
+    //   });
+    case 'filter/filterContact':
+      return { ...state, filterWord: action.payload };
     default:
       return state;
   }
@@ -80,6 +117,7 @@ const filtersReducer = (state = filtersInitialState, action) => {
 export const rootReducer = combineReducers({
   contacts: contactsReducer,
   filters: filtersReducer,
+  filterWord: filterContactReducer,
 });
 
 // const initialState = {
